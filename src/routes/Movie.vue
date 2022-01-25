@@ -77,6 +77,7 @@
 
 <script>
 import Loader from '~/components/Loader'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -88,20 +89,23 @@ export default {
     }
   },
   computed: {
-    theMovie() {
-      return this.$store.state.movie.theMovie
-    },
-    loading() {
-      return this.$store.state.movie.loading
-    }
+    ...mapState('movie', [
+      'theMovie',
+      'loading'
+    ])
   },
   created() {
     console.log(this.$route)
     this.$store.dispatch('movie/searchMovieWithId', {
+    // this.searchMovieWithId({
       id: this.$route.params.id
     })
   },
   methods: {
+    // mapState 말고 mapActions나 다른거를 사용하는것은 그다지 효율적이지 않기에 지양
+    // ...mapActions('movie', [
+    //   'searchMovieWithId'
+    // ]),
     requestDiffSizeImage(url, size = 700) {
       if (!url || url === 'N/A') {
         this.imageLoading = false;

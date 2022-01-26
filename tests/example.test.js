@@ -1,29 +1,59 @@
-import { asyncFn } from "./example";
+import { fetchMovieTitle } from "./example";
+import axios from 'axios'
 
-//TEST는 최대 5000ms로 지정되어 있다. 그래서 test의 세 번쨰 argument에 ms단위로 초를 넣어줄 수 있다
 describe('async test', () => {
-  test('done', (done) => {
-    asyncFn().then(res => {
-      expect(res).toBe('DONE!')
-      done()
+  test('movie title convertor', async () => {
+    axios.get = jest.fn(() => {
+      return new Promise(resolve => {
+        resolve({
+          data: {
+            Title: 'Frozen II'
+          }
+        })
+      }) 
     })
+    const title = await fetchMovieTitle()
+    expect(title).toBe('Frozen ii')
   })
-  //return 은 비동기로 작동되어야해서 이러게 작성도 가능
-  test('then', () => {
-    return asyncFn().then(res => {
-      expect(res).toBe('DONE!')
-    })
-  })
-
-  test('resolves', ()=> {
-    return expect(asyncFn()).resolves.toBe('DONE!')
-  })
-
-  test('async/await', async () => {
-    const res = await asyncFn()
-    expect(res).toBe("DONE!")
-  }, 7000)
 })
+
+// import * as example from './example'
+
+// describe('mock test', () => {
+//   test('mock func', async () => {
+//     jest.spyOn(example, 'asyncFn')
+//       .mockResolvedValue('DONE!')
+//     const res = await example.asyncFn()
+//     expect(res).toBe('DONE!')
+//   }, 7000)
+// })
+
+// import { asyncFn } from "./example";
+
+// //TEST는 최대 5000ms로 지정되어 있다. 그래서 test의 세 번쨰 argument에 ms단위로 초를 넣어줄 수 있다
+// describe('async test', () => {
+//   test('done', (done) => {
+//     asyncFn().then(res => {
+//       expect(res).toBe('DONE!')
+//       done()
+//     })
+//   })
+//   //return 은 비동기로 작동되어야해서 이러게 작성도 가능
+//   test('then', () => {
+//     return asyncFn().then(res => {
+//       expect(res).toBe('DONE!')
+//     })
+//   })
+
+//   test('resolves', ()=> {
+//     return expect(asyncFn()).resolves.toBe('DONE!')
+//   })
+
+//   test('async/await', async () => {
+//     const res = await asyncFn()
+//     expect(res).toBe("DONE!")
+//   }, 7000)
+// })
 
 // const userA = {
 //   name: 'jay',

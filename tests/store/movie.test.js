@@ -58,17 +58,13 @@ describe('store/movie.js', () => {
   })
 
   test('error message show if movie list is not properly got from server', async () => {
-    // 설정
     const errorMessage = 'Network Error.'
     axios.post = jest.fn().mockRejectedValue(new Error(errorMessage))
-    // 동작
     await store.dispatch('searchMovies')
-    // 확인
     expect(store.state.message).toBe(errorMessage)
   })
 
   test('making movie id unique', async () => {
-    // 설정
     const res = {
       data: {
         totalResults: '1',
@@ -95,14 +91,11 @@ describe('store/movie.js', () => {
       }
     }
     axios.post = jest.fn().mockResolvedValue(res)
-    // 동작
     await store.dispatch('searchMovies')
-    // 확인
     expect(store.state.movies.length).toBe(1)
   })
 
   test('data checks for single movie`s information', async () => {
-    // 설정
     const res = {
       data: {
         imdbID: '1',
@@ -112,9 +105,7 @@ describe('store/movie.js', () => {
       }
     }
     axios.post = jest.fn().mockResolvedValue(res)
-    // 동작
     await store.dispatch('searchMovieWithId')
-    // 확인
     expect(store.state.theMovie).toEqual(res.data)
   })
 })

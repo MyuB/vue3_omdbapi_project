@@ -1,21 +1,37 @@
-import { fetchMovieTitle } from "./example";
-import axios from 'axios'
+import { mount } from '@vue/test-utils'
+import Example from './Example.vue'
 
-describe('async test', () => {
-  test('movie title convertor', async () => {
-    axios.get = jest.fn(() => {
-      return new Promise(resolve => {
-        resolve({
-          data: {
-            Title: 'Frozen II'
-          }
-        })
-      }) 
-    })
-    const title = await fetchMovieTitle()
-    expect(title).toBe('Frozen ii')
+test('message change', async () => {
+  const wrapper = mount(Example)
+  //wrapper.vm === this
+  expect(wrapper.vm.msg).toBe("vue test utils")
+  //wrapper.vm.msg = "hello jay"
+  await wrapper.setData({
+    msg: "hello jay"
   })
+  expect(wrapper.vm.msg).toBe("hello jay")
+  expect(wrapper.find('div').text()).toBe("hello jay")
 })
+
+
+// import { fetchMovieTitle } from "./example";
+// import axios from 'axios'
+
+// describe('async test', () => {
+//   test('movie title convertor', async () => {
+//     axios.get = jest.fn(() => {
+//       return new Promise(resolve => {
+//         resolve({
+//           data: {
+//             Title: 'Frozen II'
+//           }
+//         })
+//       }) 
+//     })
+//     const title = await fetchMovieTitle()
+//     expect(title).toBe('Frozen ii')
+//   })
+// })
 
 // import * as example from './example'
 

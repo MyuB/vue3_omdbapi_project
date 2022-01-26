@@ -37,7 +37,7 @@ export default {
     return {
       navigations: [
         {
-          name: 'Seach',
+          name: 'Search',
           href: '/'
         },
         {
